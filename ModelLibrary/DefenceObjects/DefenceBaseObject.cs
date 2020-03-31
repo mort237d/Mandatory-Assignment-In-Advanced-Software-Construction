@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ModelLibrary.DefenceObjects
 {
-    internal abstract class DefenceBaseObject
+    public abstract class DefenceBaseObject
     {
         private string _name;
         private int _defence;

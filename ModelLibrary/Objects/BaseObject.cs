@@ -6,7 +6,7 @@ using ModelLibrary.DefenceObjects;
 
 namespace ModelLibrary.Objects
 {
-    internal abstract class BaseObject
+    public abstract class BaseObject
     {
         private string _name;
         private int _size;

@@ -4,10 +4,10 @@ using System.Text;
 
 namespace ModelLibrary
 {
-    enum Difficulty
+    public enum Difficulty
     {
         EASY,
-        MEDIUM,
+        NORMAL,
         HARD
     }
 }

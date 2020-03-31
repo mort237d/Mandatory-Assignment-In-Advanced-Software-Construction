@@ -13,5 +13,20 @@ namespace ModelLibrary.AttackObjects
             Size = 1;
             Rarity1 = Rarity.COMMON;
         }
+
+        protected override void DrawWeapon()
+        {
+            Console.WriteLine("              +-+\r\n=============| |\r\n            `:_;'");
+        }
+
+        protected override void SingleAttack()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void ComboAttack()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

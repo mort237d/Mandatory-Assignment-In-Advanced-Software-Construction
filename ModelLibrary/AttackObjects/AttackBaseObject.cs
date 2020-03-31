@@ -17,6 +17,19 @@ namespace ModelLibrary.AttackObjects
             Name = this.GetType().Name;
         }
 
+        protected abstract void DrawWeapon();
+
+        // Primitive Operations (Template Method Pattern)
+        protected abstract void SingleAttack();
+        protected abstract void ComboAttack();
+
+        public void Attack()
+        {
+            Console.WriteLine("Attack");
+            SingleAttack();
+            ComboAttack();
+        }
+
         public string Name
         {
             get => _name;
