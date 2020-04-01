@@ -24,6 +24,16 @@ namespace ModelLibrary.AttackDecorator
             throw new NotImplementedException();
         }
 
+        protected override void SingleAttack()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void ComboAttack()
+        {
+            throw new NotImplementedException();
+        }
+
         public override string ToString()
         {
             return $"{base.ToString()}, PoisonDamage: {PoisonDamage}";

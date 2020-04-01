@@ -21,12 +21,12 @@ namespace ModelLibrary.AttackObjects
 
         protected override void SingleAttack()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("SingleAttack");
         }
 
         protected override void ComboAttack()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("ComboAttack");
         }
     }
 }

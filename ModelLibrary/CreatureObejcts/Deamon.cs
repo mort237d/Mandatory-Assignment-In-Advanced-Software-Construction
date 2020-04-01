@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ModelLibrary.CreatureObejcts
 {
-    class Deamon : CreatureBaseObject
+    public class Deamon : CreatureBaseObject
     {
         public Deamon()
         {

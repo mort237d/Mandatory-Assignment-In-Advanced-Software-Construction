@@ -16,6 +16,8 @@ namespace ModelLibrary.CreatureObejcts
         private List<DefenceBaseObject> _defenceBaseObjects;
         private int _maxSizeOfDefenceObject;
         private int _life;
+        private int _xCordinate;
+        private int _yCordinate;
 
         public CreatureBaseObject()
         {
@@ -82,6 +84,18 @@ namespace ModelLibrary.CreatureObejcts
         {
             get => _life;
             set => _life = value;
+        }
+
+        public int XCordinate
+        {
+            get => _xCordinate;
+            set => _xCordinate = value;
+        }
+
+        public int YCordinate
+        {
+            get => _yCordinate;
+            set => _yCordinate = value;
         }
     }
 }

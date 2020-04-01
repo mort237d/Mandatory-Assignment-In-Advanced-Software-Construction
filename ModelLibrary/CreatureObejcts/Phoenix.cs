@@ -6,7 +6,7 @@ using ModelLibrary.AttackObjects;
 
 namespace ModelLibrary.CreatureObejcts
 {
-    class Phoenix : CreatureBaseObject
+    public class Phoenix : CreatureBaseObject
     {
         public Phoenix()
         {

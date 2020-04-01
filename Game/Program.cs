@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using ModelLibrary;
 using ModelLibrary.AttackDecorator;
 using ModelLibrary.AttackObjects;
@@ -13,16 +14,25 @@ namespace Game
     {
         static void Main(string[] args)
         {
-            Forest forest = new Forest(new int[10,10], new List<BaseObject>(), new List<CreatureBaseObject>());
-            
-            Sword sword = new Sword();
-            Console.WriteLine(sword.ToString());
+            Console.OutputEncoding = System.Text.Encoding.Default;
 
-            Poiseneas poiseneas = new Poiseneas(sword);
-            Console.WriteLine(poiseneas.ToString());
+            Forest forest = new Forest(new string[5,5], new List<BaseObject>(), new List<CreatureBaseObject>{new Phoenix(), new Deamon(), new Snake()});
+            while (true)
+            {
+                Console.Clear();
+                forest.CreaturesMoving();
+                Thread.Sleep(1000);
+            }
 
-            Fiery fiery = new Fiery(sword);
-            Console.WriteLine(fiery.ToString());
+            //Sword sword = new Sword();
+            //Console.WriteLine(sword.ToString());
+            //sword.Attack();
+
+            //Poiseneas poiseneas = new Poiseneas(sword);
+            //Console.WriteLine(poiseneas.ToString());
+
+            //Fiery fiery = new Fiery(sword);
+            //Console.WriteLine(fiery.ToString());
         }
     }
 }
