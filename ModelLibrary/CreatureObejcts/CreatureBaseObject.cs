@@ -18,12 +18,14 @@ namespace ModelLibrary.CreatureObejcts
         private int _life;
         private int _xCordinate;
         private int _yCordinate;
+        private bool _dead;
 
         public CreatureBaseObject()
         {
             Name = this.GetType().Name;
             MaxSizeOfAttackObject = 2;
             MaxSizeOfDefenceObject = 5;
+            Dead = false;
         }
 
         public string Name
@@ -83,7 +85,14 @@ namespace ModelLibrary.CreatureObejcts
         public int Life
         {
             get => _life;
-            set => _life = value;
+            set
+            {
+                _life = value;
+                if (_life <= 0)
+                {
+                    Dead = true;
+                }
+            }
         }
 
         public int XCordinate
@@ -96,6 +105,12 @@ namespace ModelLibrary.CreatureObejcts
         {
             get => _yCordinate;
             set => _yCordinate = value;
+        }
+
+        public bool Dead
+        {
+            get => _dead;
+            set => _dead = value;
         }
     }
 }

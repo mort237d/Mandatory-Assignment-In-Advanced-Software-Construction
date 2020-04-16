@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using Microsoft.VisualBasic;
@@ -119,12 +120,14 @@ namespace ModelLibrary.World
                 {
                     if (CreatureBaseObjects.Any(c => c.XCordinate == CreatureBaseObjects[i].XCordinate && c.YCordinate == CreatureBaseObjects[i].YCordinate))
                     {
-                        List<CreatureBaseObject> creaturesInBattle = CreatureBaseObjects.FindAll(c => c.XCordinate == moveX && c.YCordinate == moveY);
+                        List<CreatureBaseObject> creaturesInBattle = CreatureBaseObjects.FindAll(c => c.XCordinate == CreatureBaseObjects[i].XCordinate && c.YCordinate == CreatureBaseObjects[i].YCordinate);
 
-                        if (creaturesInBattle.Count != 0) //TODO make it work!
+                        if (creaturesInBattle.Count != 0)
                         {
-                            creaturesInBattle[0].Life += creaturesInBattle[1].BaseDamage * creaturesInBattle[1].BaseSpeed;
-                            creaturesInBattle[1].Life += creaturesInBattle[0].BaseDamage * creaturesInBattle[0].BaseSpeed;
+                            creaturesInBattle[0].Life -= creaturesInBattle[1].BaseDamage * creaturesInBattle[1].BaseSpeed;
+                            creaturesInBattle[1].Life -= creaturesInBattle[0].BaseDamage * creaturesInBattle[0].BaseSpeed;
+
+                            CreatureBaseObjects.RemoveAll(c => c.Dead);
                         }
                     }
                 }

@@ -21,7 +21,7 @@ namespace Game
             {
                 Console.Clear();
                 forest.CreaturesMoving();
-                Thread.Sleep(1000);
+                Thread.Sleep(700);
             }
 
             //Sword sword = new Sword();
