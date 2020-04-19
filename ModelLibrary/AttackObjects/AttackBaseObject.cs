@@ -17,8 +17,6 @@ namespace ModelLibrary.AttackObjects
             Name = this.GetType().Name;
         }
 
-        protected abstract void DrawWeapon();
-
         // Primitive Operations (Template Method Pattern)
         protected abstract void SingleAttack();
         protected abstract void ComboAttack();

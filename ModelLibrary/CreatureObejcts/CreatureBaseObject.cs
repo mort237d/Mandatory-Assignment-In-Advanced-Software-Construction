@@ -32,10 +32,7 @@ namespace ModelLibrary.CreatureObejcts
         {
             TotalDamage = BaseDamage * BaseSpeed;
 
-            if (AttackBaseObjects != null)
-            {
-                TotalDamage += AttackBaseObjects.Damage * AttackBaseObjects.Speed;
-            }
+            if (AttackBaseObjects != null) TotalDamage += AttackBaseObjects.Damage * AttackBaseObjects.Speed;
         }
 
         public void CalculateDefence()

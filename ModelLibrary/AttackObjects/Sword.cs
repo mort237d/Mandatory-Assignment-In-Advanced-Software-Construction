@@ -14,11 +14,6 @@ namespace ModelLibrary.AttackObjects
             Rarity1 = Rarity.COMMON;
         }
 
-        protected override void DrawWeapon()
-        {
-            Console.WriteLine("       /| ________________\r\nO|===|* >________________>\r\n      \\|");
-        }
-
         protected override void SingleAttack()
         {
             Console.WriteLine("SingleAttack");

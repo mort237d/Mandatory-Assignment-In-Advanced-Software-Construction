@@ -21,11 +21,6 @@ namespace ModelLibrary.AttackDecorator
             Damage += FireDamage;
         }
 
-        protected override void DrawWeapon()
-        {
-            throw new NotImplementedException();
-        }
-
         protected override void SingleAttack()
         {
             throw new NotImplementedException();

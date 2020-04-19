@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using Microsoft.VisualBasic;
-using ModelLibrary.AttackObjects;
-using ModelLibrary.CreatureObejcts;
-using ModelLibrary.DefenceObjects;
+﻿using ModelLibrary.CreatureObejcts;
 using ModelLibrary.Objects;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ModelLibrary.World
 {
@@ -82,16 +77,6 @@ namespace ModelLibrary.World
                     {
                         Size[x,y] = CreatureBaseObjects.Find(creatureBaseObjects => creatureBaseObjects.XCordinate == x && creatureBaseObjects.YCordinate == y);
                     }
-
-                    //switch (Size[x,y])
-                    //{
-                    //    case EmptyObject emptyObject:
-                    //        Console.Write("|_|"); 
-                    //        break;
-                    //    default:
-                    //        Console.Write($"|{Size[x, y].Name.Remove(1)}|");
-                    //        break;
-                    //}
                 }
             }
         }
@@ -126,20 +111,25 @@ namespace ModelLibrary.World
             {
                 for (int y = 0; y < Size.GetLength(1); y++)
                 {
-                    //if (Size[i, j].Equals("|R|")) Console.ForegroundColor = ConsoleColor.Gray;
-                    //if (Size[i, j] == C) Console.ForegroundColor = ConsoleColor.Yellow;
-
                     switch (Size[x, y])
                     {
                         case EmptyObject emptyObject:
                             Console.Write("|_|");
+                            break;
+                        case Chest chest:
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write($"|{Size[x, y].Name.Remove(1)}|");
+                            break;
+                        case Rock rock:
+                            Console.ForegroundColor = ConsoleColor.Gray;
+                            Console.Write($"|{Size[x, y].Name.Remove(1)}|");
                             break;
                         default:
                             Console.Write($"|{Size[x, y].Name.Remove(1)}|");
                             break;
                     }
 
-                    //Console.ForegroundColor = ConsoleColor.White;
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
 
                 Console.WriteLine();
@@ -178,14 +168,10 @@ namespace ModelLibrary.World
 
                             if (chest.DefenceBaseObjectBonus != null)
                             {
-                                if (CreatureBaseObjects[i].DefenceBaseObjects != null)
+                                if (!CreatureBaseObjects[i].DefenceBaseObjects.Any(d => d.Name.Contains(chest.DefenceBaseObjectBonus.Name)))
                                 {
-                                    if (!CreatureBaseObjects[i].DefenceBaseObjects.Any(d => d.Name.Contains(chest.DefenceBaseObjectBonus.Name)))
-                                    {
-                                        CreatureBaseObjects[i].DefenceBaseObjects.Add(chest.DefenceBaseObjectBonus);
-                                    }
+                                    CreatureBaseObjects[i].DefenceBaseObjects.Add(chest.DefenceBaseObjectBonus);
                                 }
-                                else CreatureBaseObjects[i].DefenceBaseObjects.Add(chest.DefenceBaseObjectBonus);
 
                                 CreatureBaseObjects[i].CalculateDefence();
                             }
@@ -207,6 +193,32 @@ namespace ModelLibrary.World
                             {
                                 if (creaturesInBattle[1].TotalDamage > creaturesInBattle[0].Defence) creaturesInBattle[0].Life -= creaturesInBattle[1].TotalDamage - creaturesInBattle[0].Defence;
                                 if (creaturesInBattle[0].TotalDamage > creaturesInBattle[1].Defence) creaturesInBattle[1].Life -= creaturesInBattle[0].TotalDamage - creaturesInBattle[1].Defence;
+
+                                if (creaturesInBattle[0].Dead && creaturesInBattle[1].AttackBaseObjects != null)
+                                {
+                                    switch (creaturesInBattle[0])
+                                    {
+                                        case Snake snake:
+                                            creaturesInBattle[1].AttackBaseObjects = snake.PoisonUpgrade(creaturesInBattle[1].AttackBaseObjects);
+                                            break;
+                                        case Phoenix phoenix:
+                                            creaturesInBattle[1].AttackBaseObjects = phoenix.FireUpgrade(creaturesInBattle[1].AttackBaseObjects);
+                                            break;
+                                    }
+                                }
+
+                                if (creaturesInBattle[1].Dead && creaturesInBattle[0].AttackBaseObjects != null)
+                                {
+                                    switch (creaturesInBattle[1])
+                                    {
+                                        case Snake snake:
+                                            creaturesInBattle[0].AttackBaseObjects = snake.PoisonUpgrade(creaturesInBattle[0].AttackBaseObjects);
+                                            break;
+                                        case Phoenix phoenix:
+                                            creaturesInBattle[0].AttackBaseObjects = phoenix.FireUpgrade(creaturesInBattle[0].AttackBaseObjects);
+                                            break;
+                                    }
+                                }
 
                                 CreatureBaseObjects.RemoveAll(c => c.Dead);
                             }

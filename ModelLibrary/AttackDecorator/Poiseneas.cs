@@ -17,11 +17,8 @@ namespace ModelLibrary.AttackDecorator
             Size = attackBaseObject.Size;
             Rarity1 = Rarity.RARE;
             PoisonDamage = 2;
-        }
 
-        protected override void DrawWeapon()
-        {
-            throw new NotImplementedException();
+            Damage += PoisonDamage;
         }
 
         protected override void SingleAttack()

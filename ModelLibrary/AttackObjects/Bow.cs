@@ -14,11 +14,6 @@ namespace ModelLibrary.AttackObjects
             Rarity1 = Rarity.RARE;
         }
 
-        protected override void DrawWeapon()
-        {
-            Console.WriteLine(">>>>>>>_____________________\\`-._\r\n>>>>>>>                     /.-'");
-        }
-
         protected override void SingleAttack()
         {
             throw new NotImplementedException();
