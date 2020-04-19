@@ -78,7 +78,14 @@ namespace ModelLibrary.CreatureObejcts
             get => _attackBaseObjects;
             set
             {
-                _attackBaseObjects = value;
+                if (_attackBaseObjects == null)
+                {
+                    _attackBaseObjects = value;
+                }
+                else if (_attackBaseObjects.Damage * _attackBaseObjects.Speed < value.Damage * value.Speed)
+                {
+                    _attackBaseObjects = value;
+                }
                 CalculateDamage();
             }
         }

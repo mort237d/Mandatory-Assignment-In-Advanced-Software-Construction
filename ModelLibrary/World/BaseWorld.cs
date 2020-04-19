@@ -173,14 +173,7 @@ namespace ModelLibrary.World
                             Chest chest = (Chest) Size[newXCordinate, newYCordinate];
                             if (chest.AttackBaseObjectBonus != null)
                             {
-                                if (CreatureBaseObjects[i].AttackBaseObjects != null)
-                                {
-                                    if (CreatureBaseObjects[i].AttackBaseObjects.Damage * CreatureBaseObjects[i].AttackBaseObjects.Speed < chest.AttackBaseObjectBonus.Damage * chest.AttackBaseObjectBonus.Speed)
-                                    {
-                                        CreatureBaseObjects[i].AttackBaseObjects = chest.AttackBaseObjectBonus;
-                                    }
-                                }
-                                else CreatureBaseObjects[i].AttackBaseObjects = chest.AttackBaseObjectBonus;
+                                CreatureBaseObjects[i].AttackBaseObjects = chest.AttackBaseObjectBonus;
                             }
 
                             if (chest.DefenceBaseObjectBonus != null)
