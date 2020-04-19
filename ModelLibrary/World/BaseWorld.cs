@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.VisualBasic;
 using ModelLibrary.AttackObjects;
 using ModelLibrary.CreatureObejcts;
+using ModelLibrary.DefenceObjects;
 using ModelLibrary.Objects;
 
 namespace ModelLibrary.World
@@ -181,8 +182,24 @@ namespace ModelLibrary.World
                                 }
                                 else CreatureBaseObjects[i].AttackBaseObjects = chest.AttackBaseObjectBonus;
 
-                                Size[newXCordinate, newYCordinate] = new EmptyObject();
+                                CreatureBaseObjects[i].CalculateDamage();
                             }
+
+                            if (chest.DefenceBaseObjectBonus != null)
+                            {
+                                if (CreatureBaseObjects[i].DefenceBaseObjects != null)
+                                {
+                                    if (!CreatureBaseObjects[i].DefenceBaseObjects.Any(d => d.Name.Contains(chest.DefenceBaseObjectBonus.Name)))
+                                    {
+                                        CreatureBaseObjects[i].DefenceBaseObjects.Add(chest.DefenceBaseObjectBonus);
+                                    }
+                                }
+                                else CreatureBaseObjects[i].DefenceBaseObjects.Add(chest.DefenceBaseObjectBonus);
+
+                                CreatureBaseObjects[i].CalculateDefence();
+                            }
+
+                            BaseObjects.Remove(BaseObjects.Find(baseObject => baseObject.XCordinate == newXCordinate && baseObject.YCordinate == newYCordinate));
                         }
                         CreatureBaseObjects[i].XCordinate += moveX;
                         CreatureBaseObjects[i].YCordinate += moveY;
@@ -221,7 +238,7 @@ namespace ModelLibrary.World
             foreach (var creature in CreatureBaseObjects)
             {
                 creatureNames += $"{creature.Name} ({creature.Name.Remove(1)}) | ";
-                creatureStats += $"D: {creature.TotalDamage} H: {creature.Life} | ";
+                creatureStats += $"A: {creature.TotalDamage} H: {creature.Life} D: {creature.Defence} | ";
             }
 
             string lines = null;

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ModelLibrary.DefenceObjects
 {
-    class Shield : DefenceBaseObject
+    public class Shield : DefenceBaseObject
     {
         public Shield()
         {

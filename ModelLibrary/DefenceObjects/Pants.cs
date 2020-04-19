@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ModelLibrary.DefenceObjects
 {
-    class Pants : DefenceBaseObject
+    public class Pants : DefenceBaseObject
     {
         public Pants()
         {

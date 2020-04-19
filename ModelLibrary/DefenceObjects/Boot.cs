@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ModelLibrary.DefenceObjects
 {
-    class Boot : DefenceBaseObject
+    public class Boot : DefenceBaseObject
     {
         public Boot()
         {

@@ -16,12 +16,14 @@ namespace ModelLibrary.CreatureObejcts
         private List<DefenceBaseObject> _defenceBaseObjects;
         private int _maxSizeOfDefenceObject;
         private int _life;
+        private int _defence;
         private bool _dead;
 
         public CreatureBaseObject()
         {
             MaxSizeOfAttackObject = 2;
             MaxSizeOfDefenceObject = 5;
+            Defence = 0;
             Dead = false;
         }
 
@@ -32,6 +34,17 @@ namespace ModelLibrary.CreatureObejcts
             if (AttackBaseObjects != null)
             {
                 TotalDamage += AttackBaseObjects.Damage * AttackBaseObjects.Speed;
+            }
+        }
+
+        public void CalculateDefence()
+        {
+            if (DefenceBaseObjects != null)
+            {
+                foreach (var defenceBaseObject in DefenceBaseObjects)
+                {
+                    Defence += defenceBaseObject.Defence;
+                }
             }
         }
 
@@ -106,6 +119,12 @@ namespace ModelLibrary.CreatureObejcts
         {
             get => _totalDamage;
             set => _totalDamage = value;
+        }
+
+        public int Defence
+        {
+            get => _defence;
+            set => _defence = value;
         }
     }
 }
