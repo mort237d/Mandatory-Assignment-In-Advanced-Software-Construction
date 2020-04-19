@@ -13,6 +13,8 @@ namespace ModelLibrary.CreatureObejcts
             Size = 1;
             Difficulty1 = Difficulty.EASY;
             Life = 10;
+
+            CalculateDamage();
         }
     }
 }

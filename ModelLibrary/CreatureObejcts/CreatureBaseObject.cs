@@ -4,34 +4,35 @@ using ModelLibrary.DefenceObjects;
 
 namespace ModelLibrary.CreatureObejcts
 {
-    public abstract class CreatureBaseObject
+    public abstract class CreatureBaseObject : WorldObject
     {
-        private string _name;
         private int _baseDamage;
         private int _baseSpeed;
+        private int _totalDamage;
         private int _size;
         private Difficulty _difficulty;
-        private List<AttackBaseObject> _attackBaseObjects;
+        private AttackBaseObject _attackBaseObjects;
         private int _maxSizeOfAttackObject;
         private List<DefenceBaseObject> _defenceBaseObjects;
         private int _maxSizeOfDefenceObject;
         private int _life;
-        private int _xCordinate;
-        private int _yCordinate;
         private bool _dead;
 
         public CreatureBaseObject()
         {
-            Name = this.GetType().Name;
             MaxSizeOfAttackObject = 2;
             MaxSizeOfDefenceObject = 5;
             Dead = false;
         }
 
-        public string Name
+        public void CalculateDamage()
         {
-            get => _name;
-            set => _name = value;
+            TotalDamage = BaseDamage * BaseSpeed;
+
+            if (AttackBaseObjects != null)
+            {
+                TotalDamage += AttackBaseObjects.Damage * AttackBaseObjects.Speed;
+            }
         }
 
         public int BaseDamage
@@ -58,7 +59,7 @@ namespace ModelLibrary.CreatureObejcts
             set => _difficulty = value;
         }
 
-        public List<AttackBaseObject> AttackBaseObjects
+        public AttackBaseObject AttackBaseObjects
         {
             get => _attackBaseObjects;
             set => _attackBaseObjects = value;
@@ -95,22 +96,16 @@ namespace ModelLibrary.CreatureObejcts
             }
         }
 
-        public int XCordinate
-        {
-            get => _xCordinate;
-            set => _xCordinate = value;
-        }
-
-        public int YCordinate
-        {
-            get => _yCordinate;
-            set => _yCordinate = value;
-        }
-
         public bool Dead
         {
             get => _dead;
             set => _dead = value;
+        }
+
+        public int TotalDamage
+        {
+            get => _totalDamage;
+            set => _totalDamage = value;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace ModelLibrary.World
 {
     public class Forest : BaseWorld
     {
-        public Forest(string[,] size, List<BaseObject> baseObjects, List<CreatureBaseObject> creatureBaseObjects) : base(size, baseObjects, creatureBaseObjects)
+        public Forest(WorldObject[,] size, List<BaseObject> baseObjects, List<CreatureBaseObject> creatureBaseObjects) : base(size, baseObjects, creatureBaseObjects)
         {
             Size = size;
             BaseObjects = baseObjects;

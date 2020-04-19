@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ModelLibrary.AttackObjects
 {
-    class Two_Handed_Sword : AttackBaseObject
+    public class Two_Handed_Sword : AttackBaseObject
     {
         public Two_Handed_Sword()
         {

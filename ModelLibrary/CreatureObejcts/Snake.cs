@@ -15,6 +15,8 @@ namespace ModelLibrary.CreatureObejcts
             Size = 1;
             Difficulty1 = Difficulty.EASY;
             Life = 9;
+
+            CalculateDamage();
         }
 
         public Poiseneas PoisonUpgrade(AttackBaseObject attackBaseObject)

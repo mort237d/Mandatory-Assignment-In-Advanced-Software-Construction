@@ -17,6 +17,8 @@ namespace ModelLibrary.AttackDecorator
             Size = attackBaseObject.Size;
             Rarity1 = Rarity.RARE;
             FireDamage = 3;
+
+            Damage += FireDamage;
         }
 
         protected override void DrawWeapon()

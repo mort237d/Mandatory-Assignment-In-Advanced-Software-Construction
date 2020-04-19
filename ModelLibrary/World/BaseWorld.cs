@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using Microsoft.VisualBasic;
+using ModelLibrary.AttackObjects;
 using ModelLibrary.CreatureObejcts;
 using ModelLibrary.Objects;
 
@@ -11,54 +12,86 @@ namespace ModelLibrary.World
 {
     public abstract class BaseWorld
     {
-        private string[,] _size;
+        private WorldObject[,] _size;
+
         private List<BaseObject> _baseObjects;
         private List<CreatureBaseObject> _creatureBaseObjects;
 
-        protected BaseWorld(string[,] size, List<BaseObject> baseObjects, List<CreatureBaseObject> creatureBaseObjects)
+        protected BaseWorld(WorldObject[,] size, List<BaseObject> baseObjects, List<CreatureBaseObject> creatureBaseObjects)
         {
             Size = size;
             BaseObjects = baseObjects;
             CreatureBaseObjects = creatureBaseObjects;
 
+            GiveObjectsCordinates();
             GiveCreaturesCordinates();
-            WorldInit(Size);
+            WorldInit();
             PopulateWorld();
-            DrawWorld(Size);
+            DrawWorld();
         }
 
-        private void WorldInit(string[,] size)
+        private void GiveObjectsCordinates()
         {
-            Console.WriteLine("WorldInit " + size.GetLength(0) + " x " + size.GetLength(1));
-            for (int i = 0; i < size.GetLength(0); i++)
+            bool objectNotSet;
+            Random random = new Random();
+
+            foreach (var o in BaseObjects)
             {
-                for (int j = 0; j < size.GetLength(1); j++)
+                int cordX = random.Next(Size.GetLength(0));
+                int cordY = random.Next(Size.GetLength(1));
+
+                objectNotSet = true;
+
+                while (objectNotSet)
                 {
-                    size[i, j] = "|_|";
+                    if (!BaseObjects.Any(baseObject => baseObject.XCordinate == cordX && baseObject.YCordinate == cordY))
+                    {
+                        o.XCordinate = cordX;
+                        o.YCordinate = cordY;
+
+                        objectNotSet = false;
+                    }
+                }
+            }
+        }
+
+        private void WorldInit()
+        {
+            for (int i = 0; i < Size.GetLength(0); i++)
+            {
+                for (int j = 0; j < Size.GetLength(1); j++)
+                {
+                    Size[i, j] = new EmptyObject();
                 }
             }
         }
 
         protected void PopulateWorld()
         {
-            char creatureSign = '\0';
-
-            foreach (var creature in CreatureBaseObjects)
+            for (int x = 0; x < Size.GetLength(0); x++)
             {
-                switch (creature.Name)
+                for (int y = 0; y < Size.GetLength(1); y++)
                 {
-                    case "Phoenix":
-                        creatureSign = 'P';
-                        break;
-                    case "Snake":
-                        creatureSign = 'S';
-                        break;
-                    case "Deamon":
-                        creatureSign = 'D';
-                        break;
-                }
+                    if (BaseObjects.Any(baseObjects => baseObjects.XCordinate == x && baseObjects.YCordinate == y))
+                    {
+                        Size[x,y] = BaseObjects.Find(baseObjects => baseObjects.XCordinate == x && baseObjects.YCordinate == y);
+                    }
 
-                Size[creature.XCordinate, creature.YCordinate] = "|" + creatureSign + "|";
+                    if (CreatureBaseObjects.Any(creatureBaseObjects => creatureBaseObjects.XCordinate == x && creatureBaseObjects.YCordinate == y))
+                    {
+                        Size[x,y] = CreatureBaseObjects.Find(creatureBaseObjects => creatureBaseObjects.XCordinate == x && creatureBaseObjects.YCordinate == y);
+                    }
+
+                    //switch (Size[x,y])
+                    //{
+                    //    case EmptyObject emptyObject:
+                    //        Console.Write("|_|"); 
+                    //        break;
+                    //    default:
+                    //        Console.Write($"|{Size[x, y].Name.Remove(1)}|");
+                    //        break;
+                    //}
+                }
             }
         }
 
@@ -74,7 +107,8 @@ namespace ModelLibrary.World
                 creatureNotSet = true;
                 while (creatureNotSet)
                 {
-                    if (!CreatureBaseObjects.Any(c => c.XCordinate == cordX && c.YCordinate == cordY))
+                    if (!CreatureBaseObjects.Any(c => c.XCordinate == cordX && c.YCordinate == cordY) &&
+                        !BaseObjects.Any(baseObject => baseObject.XCordinate == cordX && baseObject.YCordinate == cordY))
                     {
                         creature.XCordinate = cordX;
                         creature.YCordinate = cordY;
@@ -85,13 +119,26 @@ namespace ModelLibrary.World
             }
         }
 
-        private void DrawWorld(string[,] size)
+        private void DrawWorld()
         {
-            for (int i = 0; i < size.GetLength(0); i++)
+            for (int x = 0; x < Size.GetLength(0); x++)
             {
-                for (int j = 0; j < size.GetLength(1); j++)
+                for (int y = 0; y < Size.GetLength(1); y++)
                 {
-                    Console.Write(size[i, j]);
+                    //if (Size[i, j].Equals("|R|")) Console.ForegroundColor = ConsoleColor.Gray;
+                    //if (Size[i, j] == C) Console.ForegroundColor = ConsoleColor.Yellow;
+
+                    switch (Size[x, y])
+                    {
+                        case EmptyObject emptyObject:
+                            Console.Write("|_|");
+                            break;
+                        default:
+                            Console.Write($"|{Size[x, y].Name.Remove(1)}|");
+                            break;
+                    }
+
+                    //Console.ForegroundColor = ConsoleColor.White;
                 }
 
                 Console.WriteLine();
@@ -104,38 +151,65 @@ namespace ModelLibrary.World
 
             for (int i = 0; i < CreatureBaseObjects.Count; i++)
             {
-                int moveX = random.Next(-1, 2);
-                int moveY = random.Next(-1, 2);
+                bool notMoved = true;
 
-                if (CreatureBaseObjects[i].XCordinate + moveX >= 0 && CreatureBaseObjects[i].XCordinate + moveX <= Size.GetLength(0) - 1)
+                while (notMoved)
                 {
-                    CreatureBaseObjects[i].XCordinate += moveX;
-                }
-                if(CreatureBaseObjects[i].YCordinate + moveY >= 0 && CreatureBaseObjects[i].YCordinate + moveY <= Size.GetLength(1) - 1)
-                {
-                    CreatureBaseObjects[i].YCordinate += moveY;
-                }
+                    int moveX = random.Next(-1, 2);
+                    int moveY = random.Next(-1, 2);
 
-                if (i != CreatureBaseObjects.IndexOf(CreatureBaseObjects.Find(c => c.XCordinate == CreatureBaseObjects[i].XCordinate && c.YCordinate == CreatureBaseObjects[i].YCordinate)))
-                {
-                    if (CreatureBaseObjects.Any(c => c.XCordinate == CreatureBaseObjects[i].XCordinate && c.YCordinate == CreatureBaseObjects[i].YCordinate))
+                    int newXCordinate = CreatureBaseObjects[i].XCordinate + moveX;
+                    int newYCordinate = CreatureBaseObjects[i].YCordinate + moveY;
+
+                    if (newXCordinate >= 0 &&
+                        newXCordinate <= Size.GetLength(0) - 1 &&
+                        newYCordinate >= 0 &&
+                        newYCordinate <= Size.GetLength(1) - 1 &&
+                        Size[newXCordinate, newYCordinate].GetType() != typeof(Rock))
                     {
-                        List<CreatureBaseObject> creaturesInBattle = CreatureBaseObjects.FindAll(c => c.XCordinate == CreatureBaseObjects[i].XCordinate && c.YCordinate == CreatureBaseObjects[i].YCordinate);
-
-                        if (creaturesInBattle.Count != 0)
+                        if (Size[newXCordinate, newYCordinate].GetType() == typeof(Chest))
                         {
-                            creaturesInBattle[0].Life -= creaturesInBattle[1].BaseDamage * creaturesInBattle[1].BaseSpeed;
-                            creaturesInBattle[1].Life -= creaturesInBattle[0].BaseDamage * creaturesInBattle[0].BaseSpeed;
+                            Chest chest = (Chest) Size[newXCordinate, newYCordinate];
+                            if (chest.AttackBaseObjectBonus != null)
+                            {
+                                if (CreatureBaseObjects[i].AttackBaseObjects != null)
+                                {
+                                    if (CreatureBaseObjects[i].AttackBaseObjects.Damage * CreatureBaseObjects[i].AttackBaseObjects.Speed < chest.AttackBaseObjectBonus.Damage * chest.AttackBaseObjectBonus.Speed)
+                                    {
+                                        CreatureBaseObjects[i].AttackBaseObjects = chest.AttackBaseObjectBonus;
+                                    }
+                                }
+                                else CreatureBaseObjects[i].AttackBaseObjects = chest.AttackBaseObjectBonus;
 
-                            CreatureBaseObjects.RemoveAll(c => c.Dead);
+                                Size[newXCordinate, newYCordinate] = new EmptyObject();
+                            }
+                        }
+                        CreatureBaseObjects[i].XCordinate += moveX;
+                        CreatureBaseObjects[i].YCordinate += moveY;
+                        notMoved = false;
+                    }
+
+                    if (i != CreatureBaseObjects.IndexOf(CreatureBaseObjects.Find(c => c.XCordinate == CreatureBaseObjects[i].XCordinate && c.YCordinate == CreatureBaseObjects[i].YCordinate)))
+                    {
+                        if (CreatureBaseObjects.Any(c => c.XCordinate == CreatureBaseObjects[i].XCordinate && c.YCordinate == CreatureBaseObjects[i].YCordinate))
+                        {
+                            List<CreatureBaseObject> creaturesInBattle = CreatureBaseObjects.FindAll(c => c.XCordinate == CreatureBaseObjects[i].XCordinate && c.YCordinate == CreatureBaseObjects[i].YCordinate);
+
+                            if (creaturesInBattle.Count != 0)
+                            {
+                                creaturesInBattle[0].Life -= creaturesInBattle[1].TotalDamage;
+                                creaturesInBattle[1].Life -= creaturesInBattle[0].TotalDamage;
+
+                                CreatureBaseObjects.RemoveAll(c => c.Dead);
+                            }
                         }
                     }
                 }
             }
 
-            WorldInit(Size);
+            WorldInit();
             PopulateWorld();
-            DrawWorld(Size);
+            DrawWorld();
             WriteOutCreatures();
         }
 
@@ -147,7 +221,7 @@ namespace ModelLibrary.World
             foreach (var creature in CreatureBaseObjects)
             {
                 creatureNames += $"{creature.Name} ({creature.Name.Remove(1)}) | ";
-                creatureStats += $"D: {creature.BaseDamage * creature.BaseSpeed} H: {creature.Life} | ";
+                creatureStats += $"D: {creature.TotalDamage} H: {creature.Life} | ";
             }
 
             string lines = null;
@@ -164,7 +238,7 @@ namespace ModelLibrary.World
             Console.WriteLine(lines);
         }
 
-        public string[,] Size
+        public WorldObject[,] Size
         {
             get => _size;
             set => _size = value;

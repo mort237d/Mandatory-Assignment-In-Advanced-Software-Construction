@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ModelLibrary.AttackObjects
 {
-    class Axe : AttackBaseObject
+    public class Axe : AttackBaseObject
     {
         public Axe()
         {

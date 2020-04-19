@@ -15,6 +15,8 @@ namespace ModelLibrary.CreatureObejcts
             Size = 2;
             Difficulty1 = Difficulty.NORMAL;
             Life = 20;
+            
+            CalculateDamage();
         }
 
         public Fiery FireUpgrade(AttackBaseObject attackBaseObject)

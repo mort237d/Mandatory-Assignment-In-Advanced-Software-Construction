@@ -16,7 +16,11 @@ namespace Game
         {
             Console.OutputEncoding = System.Text.Encoding.Default;
 
-            Forest forest = new Forest(new string[5,5], new List<BaseObject>(), new List<CreatureBaseObject>{new Phoenix(), new Deamon(), new Snake()});
+            Deamon d = new Deamon();
+            d.AttackBaseObjects = new Fiery(new Sword());
+            d.CalculateDamage();
+
+            Forest forest = new Forest(new WorldObject[10,10], new List<BaseObject>(){new Rock(), new Chest(new Bow(), null)}, new List<CreatureBaseObject>{new Phoenix(), new Deamon(), new Snake(), d});
             while (true)
             {
                 Console.Clear();
