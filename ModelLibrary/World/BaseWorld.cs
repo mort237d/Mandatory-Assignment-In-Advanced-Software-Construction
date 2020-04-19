@@ -181,8 +181,6 @@ namespace ModelLibrary.World
                                     }
                                 }
                                 else CreatureBaseObjects[i].AttackBaseObjects = chest.AttackBaseObjectBonus;
-
-                                CreatureBaseObjects[i].CalculateDamage();
                             }
 
                             if (chest.DefenceBaseObjectBonus != null)

@@ -76,7 +76,11 @@ namespace ModelLibrary.CreatureObejcts
         public AttackBaseObject AttackBaseObjects
         {
             get => _attackBaseObjects;
-            set => _attackBaseObjects = value;
+            set
+            {
+                _attackBaseObjects = value;
+                CalculateDamage();
+            }
         }
 
         public int MaxSizeOfAttackObject

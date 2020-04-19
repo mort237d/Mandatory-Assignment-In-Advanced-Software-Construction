@@ -20,7 +20,6 @@ namespace Game
             Deamon d = new Deamon();
             d.AttackBaseObjects = new Fiery(new Sword());
             d.DefenceBaseObjects = new List<DefenceBaseObject>(){new Helm()};
-            d.CalculateDamage();
             d.CalculateDefence();
 
             Forest forest = new Forest(new WorldObject[8,8], new List<BaseObject>(){new Rock(), new Chest(new Bow(), new Boot())}, new List<CreatureBaseObject>{new Phoenix(), new Deamon(), new Snake(), d});
