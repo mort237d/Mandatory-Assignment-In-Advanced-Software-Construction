@@ -214,8 +214,8 @@ namespace ModelLibrary.World
 
                             if (creaturesInBattle.Count != 0)
                             {
-                                creaturesInBattle[0].Life -= creaturesInBattle[1].TotalDamage;
-                                creaturesInBattle[1].Life -= creaturesInBattle[0].TotalDamage;
+                                if (creaturesInBattle[1].TotalDamage > creaturesInBattle[0].Defence) creaturesInBattle[0].Life -= creaturesInBattle[1].TotalDamage - creaturesInBattle[0].Defence;
+                                if (creaturesInBattle[0].TotalDamage > creaturesInBattle[1].Defence) creaturesInBattle[1].Life -= creaturesInBattle[0].TotalDamage - creaturesInBattle[1].Defence;
 
                                 CreatureBaseObjects.RemoveAll(c => c.Dead);
                             }
@@ -237,8 +237,19 @@ namespace ModelLibrary.World
 
             foreach (var creature in CreatureBaseObjects)
             {
-                creatureNames += $"{creature.Name} ({creature.Name.Remove(1)}) | ";
-                creatureStats += $"A: {creature.TotalDamage} H: {creature.Life} D: {creature.Defence} | ";
+                string name = $"{creature.Name} ({creature.Name.Remove(1)})";
+                string stat = $"A: {creature.TotalDamage} H: {creature.Life} D: {creature.Defence}";
+                string spaces = null;
+
+                int differenceOfLength = stat.Length - name.Length;
+
+                for (int i = 0; i < differenceOfLength; i++)
+                {
+                    spaces += " ";
+                }
+
+                creatureNames += $"{name}{spaces} | ";
+                creatureStats += $"{stat} | ";
             }
 
             string lines = null;

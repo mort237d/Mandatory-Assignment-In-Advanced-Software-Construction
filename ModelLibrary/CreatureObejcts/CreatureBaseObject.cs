@@ -24,6 +24,7 @@ namespace ModelLibrary.CreatureObejcts
             MaxSizeOfAttackObject = 2;
             MaxSizeOfDefenceObject = 5;
             Defence = 0;
+            DefenceBaseObjects = new List<DefenceBaseObject>();
             Dead = false;
         }
 
