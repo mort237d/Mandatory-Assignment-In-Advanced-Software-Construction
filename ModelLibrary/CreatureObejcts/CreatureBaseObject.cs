@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ModelLibrary.AttackObjects;
 using ModelLibrary.DefenceObjects;
 
@@ -26,6 +27,17 @@ namespace ModelLibrary.CreatureObejcts
             Defence = 0;
             DefenceBaseObjects = new List<DefenceBaseObject>();
             Dead = false;
+        }
+
+        public abstract void DeadText(CreatureBaseObject creatureBaseObject);
+        public abstract void UpgradeWeapon(CreatureBaseObject creatureBaseObject);
+
+
+        // The "Template method"
+        public void AfterBattle(CreatureBaseObject creatureBaseObject)
+        {
+            DeadText(creatureBaseObject);
+            UpgradeWeapon(creatureBaseObject);
         }
 
         public void CalculateDamage()

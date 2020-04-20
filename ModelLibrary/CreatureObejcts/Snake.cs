@@ -24,5 +24,16 @@ namespace ModelLibrary.CreatureObejcts
             Poiseneas poiseneas = new Poiseneas(attackBaseObject);
             return poiseneas;
         }
+
+        public override void DeadText(CreatureBaseObject creatureBaseObject)
+        {
+            Console.WriteLine($"{this.Name} died to {creatureBaseObject.Name}");
+        }
+
+        public override void UpgradeWeapon(CreatureBaseObject creatureBaseObject)
+        {
+            if (creatureBaseObject.EquipedAttackBaseObject != null) creatureBaseObject.EquipedAttackBaseObject = PoisonUpgrade(creatureBaseObject.EquipedAttackBaseObject);
+            Console.WriteLine($"{this.Name} upgrades the weapon of {creatureBaseObject.Name} with poision");
+        }
     }
 }

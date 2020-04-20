@@ -16,5 +16,15 @@ namespace ModelLibrary.CreatureObejcts
 
             CalculateDamage();
         }
+
+        public override void DeadText(CreatureBaseObject creatureBaseObject)
+        {
+            Console.WriteLine($"{this.Name} died to {creatureBaseObject.Name}");
+        }
+
+        public override void UpgradeWeapon(CreatureBaseObject creatureBaseObject)
+        {
+            Console.WriteLine($"{this.Name} have no upgrade for the weapon of {creatureBaseObject.Name}");
+        }
     }
 }

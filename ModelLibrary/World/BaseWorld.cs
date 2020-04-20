@@ -140,35 +140,9 @@ namespace ModelLibrary.World
                         if (creaturesInBattle[0].TotalDamage > creaturesInBattle[1].Defence)
                             creaturesInBattle[1].Life -= creaturesInBattle[0].TotalDamage - creaturesInBattle[1].Defence;
 
-                        if (creaturesInBattle[0].Dead && creaturesInBattle[1].EquipedAttackBaseObject != null)
-                        {
-                            switch (creaturesInBattle[0])
-                            {
-                                case Snake snake:
-                                    creaturesInBattle[1].EquipedAttackBaseObject =
-                                        snake.PoisonUpgrade(creaturesInBattle[1].EquipedAttackBaseObject);
-                                    break;
-                                case Phoenix phoenix:
-                                    creaturesInBattle[1].EquipedAttackBaseObject =
-                                        phoenix.FireUpgrade(creaturesInBattle[1].EquipedAttackBaseObject);
-                                    break;
-                            }
-                        }
+                        if (creaturesInBattle[0].Dead) creaturesInBattle[0].AfterBattle(creaturesInBattle[1]);
 
-                        if (creaturesInBattle[1].Dead && creaturesInBattle[0].EquipedAttackBaseObject != null)
-                        {
-                            switch (creaturesInBattle[1])
-                            {
-                                case Snake snake:
-                                    creaturesInBattle[0].EquipedAttackBaseObject =
-                                        snake.PoisonUpgrade(creaturesInBattle[0].EquipedAttackBaseObject);
-                                    break;
-                                case Phoenix phoenix:
-                                    creaturesInBattle[0].EquipedAttackBaseObject =
-                                        phoenix.FireUpgrade(creaturesInBattle[0].EquipedAttackBaseObject);
-                                    break;
-                            }
-                        }
+                        if (creaturesInBattle[1].Dead) creaturesInBattle[1].AfterBattle(creaturesInBattle[0]);
 
                         CreatureBaseObjects.RemoveAll(c => c.Dead);
                     }

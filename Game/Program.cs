@@ -13,7 +13,7 @@ namespace Game
             {
                 Console.Clear();
                 forest.CreaturesMoving();
-                Thread.Sleep(700);
+                Thread.Sleep(200);
             }
         }
     }

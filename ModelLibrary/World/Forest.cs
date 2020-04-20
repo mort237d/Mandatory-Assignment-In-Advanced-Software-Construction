@@ -12,7 +12,7 @@ namespace ModelLibrary.World
     {
         public Forest()
         {
-            Size = new WorldObject[10,20];
+            Size = new WorldObject[10,10];
 
             BaseObjects = new List<BaseObject>
             {
