@@ -12,8 +12,17 @@ namespace ModelLibrary.World
         private int _height;
         private int _width;
 
-        private List<BaseObject> _baseObjects;
-        private List<CreatureBaseObject> _creatureBaseObjects;
+        private List<BaseObject> _baseObjects = new List<BaseObject>();
+        private List<CreatureBaseObject> _creatureBaseObjects = new List<CreatureBaseObject>();
+
+        public BaseWorld()
+        {
+            CreateCreatures();
+            CreateObjects();
+        }
+
+        public abstract void CreateCreatures();
+        public abstract void CreateObjects();
 
         protected void EmptyWorld()
         {
@@ -51,12 +60,12 @@ namespace ModelLibrary.World
             Random random = new Random();
             foreach (var o in list)
             {
-                int cordX = random.Next(Size.GetLength(0));
-                int cordY = random.Next(Size.GetLength(1));
-
                 notSet = true;
                 while (notSet)
                 {
+                    int cordX = random.Next(Size.GetLength(0));
+                    int cordY = random.Next(Size.GetLength(1));
+
                     if (!CreatureBaseObjects.Any(c => c.XCordinate == cordX && c.YCordinate == cordY) &&
                         !BaseObjects.Any(baseObject => baseObject.XCordinate == cordX && baseObject.YCordinate == cordY))
                     {

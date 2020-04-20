@@ -12,27 +12,6 @@ namespace ModelLibrary.World
         {
             Size = new WorldObject[10,10];
 
-            BaseObjects = new List<BaseObject>
-            {
-                new Chest(null, new Boot()),
-                new Chest(new Bow(), new Helm()),
-                new Rock(),
-                new Rock(),
-                new Rock(),
-                new Tree(),
-                new Tree(),
-                new Tree(),
-                new Tree(),
-                new Tree()
-            };
-
-            CreatureBaseObjects = new List<CreatureBaseObject>
-            {
-                new Phoenix { EquipedAttackBaseObject = new Sword() }, 
-                new Snake(),
-                new Deamon {EquipedAttackBaseObject = new Bow(), DefenceBaseObjects = new List<DefenceBaseObject>{new Helm(), new Boot()}}
-            };
-
             List<WorldObject> wo = new List<WorldObject>();
             wo.AddRange(BaseObjects);
             wo.AddRange(CreatureBaseObjects);
@@ -41,6 +20,21 @@ namespace ModelLibrary.World
             EmptyWorld();
             PopulateWorld();
             DrawWorld();
+        }
+
+        public override void CreateCreatures()
+        {
+            CreatureBaseObjects.Add(new Phoenix { EquipedAttackBaseObject = new Sword() });
+            CreatureBaseObjects.Add(new Snake());
+            CreatureBaseObjects.Add(new Deamon { EquipedAttackBaseObject = new Bow(), DefenceBaseObjects = new List<DefenceBaseObject> { new Helm(), new Boot() } });
+        }
+
+        public override void CreateObjects()
+        {
+            BaseObjects.Add(new Chest(null, new Boot()));
+            BaseObjects.Add(new Chest(new Bow(), new Helm()));
+            for (int i = 0; i < 4; i++) BaseObjects.Add(new Rock());
+            for (int i = 0; i < 8; i++) BaseObjects.Add(new Tree());
         }
     }
 }

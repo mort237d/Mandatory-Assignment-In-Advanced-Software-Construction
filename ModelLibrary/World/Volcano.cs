@@ -10,7 +10,7 @@ namespace ModelLibrary.World
     {
         public Volcano()
         {
-            Size = new WorldObject[15, 15];
+            Size = new WorldObject[20, 20];
 
             BaseObjects = new List<BaseObject>
             {
@@ -41,6 +41,16 @@ namespace ModelLibrary.World
             EmptyWorld();
             PopulateWorld();
             DrawWorld();
+        }
+
+        public override void CreateCreatures()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void CreateObjects()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

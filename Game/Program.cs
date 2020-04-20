@@ -8,13 +8,13 @@ namespace Game
     {
         static void Main(string[] args)
         {
-            //Forest forest = new Forest();
-            Volcano volcano = new Volcano();
+            Forest forest = new Forest();
+            //Volcano volcano = new Volcano();
             while (true)
             {
                 Console.Clear();
-                //forest.CreaturesMoving();
-                volcano.CreaturesMoving();
+                forest.CreaturesMoving();
+                //volcano.CreaturesMoving();
                 Thread.Sleep(700);
             }
         }
