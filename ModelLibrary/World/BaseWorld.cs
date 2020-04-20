@@ -46,50 +46,25 @@ namespace ModelLibrary.World
             }
         }
 
-        protected void GiveObjectsCordinates()
+        protected void GiveCordinates(List<WorldObject> list)
         {
-            bool objectNotSet;
+            bool notSet;
             Random random = new Random();
-
-            foreach (var o in BaseObjects)
+            foreach (var o in list)
             {
                 int cordX = random.Next(Size.GetLength(0));
                 int cordY = random.Next(Size.GetLength(1));
 
-                objectNotSet = true;
-
-                while (objectNotSet)
-                {
-                    if (!BaseObjects.Any(baseObject => baseObject.XCordinate == cordX && baseObject.YCordinate == cordY))
-                    {
-                        o.XCordinate = cordX;
-                        o.YCordinate = cordY;
-
-                        objectNotSet = false;
-                    }
-                }
-            }
-        }
-
-        protected void GiveCreaturesCordinates()
-        {
-            bool creatureNotSet;
-            Random random = new Random();
-            foreach (var creature in CreatureBaseObjects)
-            {
-                int cordX = random.Next(Size.GetLength(0));
-                int cordY = random.Next(Size.GetLength(1));
-
-                creatureNotSet = true;
-                while (creatureNotSet)
+                notSet = true;
+                while (notSet)
                 {
                     if (!CreatureBaseObjects.Any(c => c.XCordinate == cordX && c.YCordinate == cordY) &&
                         !BaseObjects.Any(baseObject => baseObject.XCordinate == cordX && baseObject.YCordinate == cordY))
                     {
-                        creature.XCordinate = cordX;
-                        creature.YCordinate = cordY;
+                        o.XCordinate = cordX;
+                        o.YCordinate = cordY;
 
-                        creatureNotSet = false;
+                        notSet = false;
                     }
                 }
             }

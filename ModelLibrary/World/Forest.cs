@@ -13,6 +13,7 @@ namespace ModelLibrary.World
         public Forest()
         {
             Size = new WorldObject[10,20];
+
             BaseObjects = new List<BaseObject>
             {
                 new Chest(null, new Boot()),
@@ -26,6 +27,7 @@ namespace ModelLibrary.World
                 new Tree(),
                 new Tree()
             };
+
             CreatureBaseObjects = new List<CreatureBaseObject>
             {
                 new Phoenix { AttackBaseObjects = new Sword() }, 
@@ -33,8 +35,11 @@ namespace ModelLibrary.World
                 new Deamon {AttackBaseObjects = new Bow(), DefenceBaseObjects = new List<DefenceBaseObject>{new Helm(), new Boot()}}
             };
 
-            GiveObjectsCordinates();
-            GiveCreaturesCordinates();
+            List<WorldObject> wo = new List<WorldObject>();
+            wo.AddRange(BaseObjects);
+            wo.AddRange(CreatureBaseObjects);
+
+            GiveCordinates(wo);
             EmptyWorld();
             PopulateWorld();
             DrawWorld();
