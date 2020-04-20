@@ -11,7 +11,7 @@ namespace ModelLibrary.CreatureObejcts
         private int _totalDamage;
         private int _size;
         private Difficulty _difficulty;
-        private AttackBaseObject _attackBaseObjects;
+        private AttackBaseObject _equipedAttackBaseObject;
         private int _maxSizeOfAttackObject;
         private List<DefenceBaseObject> _defenceBaseObjects;
         private int _maxSizeOfDefenceObject;
@@ -32,7 +32,7 @@ namespace ModelLibrary.CreatureObejcts
         {
             TotalDamage = BaseDamage * BaseSpeed;
 
-            if (AttackBaseObjects != null) TotalDamage += AttackBaseObjects.Damage * AttackBaseObjects.Speed;
+            if (EquipedAttackBaseObject != null) TotalDamage += EquipedAttackBaseObject.Damage * EquipedAttackBaseObject.Speed;
         }
 
         public void CalculateDefence()
@@ -70,18 +70,18 @@ namespace ModelLibrary.CreatureObejcts
             set => _difficulty = value;
         }
 
-        public AttackBaseObject AttackBaseObjects
+        public AttackBaseObject EquipedAttackBaseObject
         {
-            get => _attackBaseObjects;
+            get => _equipedAttackBaseObject;
             set
             {
-                if (_attackBaseObjects == null)
+                if (_equipedAttackBaseObject == null)
                 {
-                    _attackBaseObjects = value;
+                    _equipedAttackBaseObject = value;
                 }
-                else if (_attackBaseObjects.Damage * _attackBaseObjects.Speed < value.Damage * value.Speed)
+                else if (_equipedAttackBaseObject.Damage * _equipedAttackBaseObject.Speed < value.Damage * value.Speed)
                 {
-                    _attackBaseObjects = value;
+                    _equipedAttackBaseObject = value;
                 }
                 CalculateDamage();
             }

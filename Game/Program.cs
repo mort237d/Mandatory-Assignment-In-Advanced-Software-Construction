@@ -18,7 +18,7 @@ namespace Game
             Console.OutputEncoding = System.Text.Encoding.Default;
 
             Deamon d = new Deamon();
-            d.AttackBaseObjects = new Fiery(new Sword());
+            d.EquipedAttackBaseObject = new Fiery(new Sword());
             d.DefenceBaseObjects = new List<DefenceBaseObject>(){new Helm()};
             d.CalculateDefence();
 

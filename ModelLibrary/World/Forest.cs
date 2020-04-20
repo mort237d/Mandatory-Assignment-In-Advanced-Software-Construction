@@ -30,9 +30,9 @@ namespace ModelLibrary.World
 
             CreatureBaseObjects = new List<CreatureBaseObject>
             {
-                new Phoenix { AttackBaseObjects = new Sword() }, 
+                new Phoenix { EquipedAttackBaseObject = new Sword() }, 
                 new Snake(),
-                new Deamon {AttackBaseObjects = new Bow(), DefenceBaseObjects = new List<DefenceBaseObject>{new Helm(), new Boot()}}
+                new Deamon {EquipedAttackBaseObject = new Bow(), DefenceBaseObjects = new List<DefenceBaseObject>{new Helm(), new Boot()}}
             };
 
             List<WorldObject> wo = new List<WorldObject>();

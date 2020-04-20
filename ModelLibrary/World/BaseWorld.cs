@@ -111,7 +111,7 @@ namespace ModelLibrary.World
 
             for (int i = 0; i < CreatureBaseObjects.Count; i++)
             {
-                CheckCreatureMoevment(random, i);
+                CheckCreatureMovement(random, i);
 
                 CreatureInBattle(i);
             }
@@ -140,32 +140,32 @@ namespace ModelLibrary.World
                         if (creaturesInBattle[0].TotalDamage > creaturesInBattle[1].Defence)
                             creaturesInBattle[1].Life -= creaturesInBattle[0].TotalDamage - creaturesInBattle[1].Defence;
 
-                        if (creaturesInBattle[0].Dead && creaturesInBattle[1].AttackBaseObjects != null)
+                        if (creaturesInBattle[0].Dead && creaturesInBattle[1].EquipedAttackBaseObject != null)
                         {
                             switch (creaturesInBattle[0])
                             {
                                 case Snake snake:
-                                    creaturesInBattle[1].AttackBaseObjects =
-                                        snake.PoisonUpgrade(creaturesInBattle[1].AttackBaseObjects);
+                                    creaturesInBattle[1].EquipedAttackBaseObject =
+                                        snake.PoisonUpgrade(creaturesInBattle[1].EquipedAttackBaseObject);
                                     break;
                                 case Phoenix phoenix:
-                                    creaturesInBattle[1].AttackBaseObjects =
-                                        phoenix.FireUpgrade(creaturesInBattle[1].AttackBaseObjects);
+                                    creaturesInBattle[1].EquipedAttackBaseObject =
+                                        phoenix.FireUpgrade(creaturesInBattle[1].EquipedAttackBaseObject);
                                     break;
                             }
                         }
 
-                        if (creaturesInBattle[1].Dead && creaturesInBattle[0].AttackBaseObjects != null)
+                        if (creaturesInBattle[1].Dead && creaturesInBattle[0].EquipedAttackBaseObject != null)
                         {
                             switch (creaturesInBattle[1])
                             {
                                 case Snake snake:
-                                    creaturesInBattle[0].AttackBaseObjects =
-                                        snake.PoisonUpgrade(creaturesInBattle[0].AttackBaseObjects);
+                                    creaturesInBattle[0].EquipedAttackBaseObject =
+                                        snake.PoisonUpgrade(creaturesInBattle[0].EquipedAttackBaseObject);
                                     break;
                                 case Phoenix phoenix:
-                                    creaturesInBattle[0].AttackBaseObjects =
-                                        phoenix.FireUpgrade(creaturesInBattle[0].AttackBaseObjects);
+                                    creaturesInBattle[0].EquipedAttackBaseObject =
+                                        phoenix.FireUpgrade(creaturesInBattle[0].EquipedAttackBaseObject);
                                     break;
                             }
                         }
@@ -176,7 +176,7 @@ namespace ModelLibrary.World
             }
         }
 
-        private void CheckCreatureMoevment(Random random, int i)
+        private void CheckCreatureMovement(Random random, int i)
         {
             bool notMoved = true;
 
@@ -200,7 +200,7 @@ namespace ModelLibrary.World
                         Chest chest = (Chest) Size[newXCordinate, newYCordinate];
                         if (chest.AttackBaseObjectBonus != null)
                         {
-                            CreatureBaseObjects[i].AttackBaseObjects = chest.AttackBaseObjectBonus;
+                            CreatureBaseObjects[i].EquipedAttackBaseObject = chest.AttackBaseObjectBonus;
                         }
 
                         if (chest.DefenceBaseObjectBonus != null)
