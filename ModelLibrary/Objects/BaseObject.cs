@@ -7,8 +7,6 @@ namespace ModelLibrary.Objects
     {
         private int _size;
         private bool _breakable;
-        private AttackBaseObject _attackBaseObjectBonus;
-        private DefenceBaseObject _defenceBaseObjectBonus;
 
         public int Size
         {
@@ -20,18 +18,6 @@ namespace ModelLibrary.Objects
         {
             get => _breakable;
             set => _breakable = value;
-        }
-
-        public AttackBaseObject AttackBaseObjectBonus
-        {
-            get => _attackBaseObjectBonus;
-            set => _attackBaseObjectBonus = value;
-        }
-
-        public DefenceBaseObject DefenceBaseObjectBonus
-        {
-            get => _defenceBaseObjectBonus;
-            set => _defenceBaseObjectBonus = value;
         }
     }
 }

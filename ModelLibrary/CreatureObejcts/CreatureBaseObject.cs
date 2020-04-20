@@ -30,8 +30,7 @@ namespace ModelLibrary.CreatureObejcts
 
         public abstract void DeadText(CreatureBaseObject creatureBaseObject);
         public abstract void UpgradeWeapon(CreatureBaseObject creatureBaseObject);
-
-
+        
         // The "Template method"
         public void AfterBattle(CreatureBaseObject creatureBaseObject)
         {
