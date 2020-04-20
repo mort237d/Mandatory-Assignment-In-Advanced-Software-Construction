@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using ModelLibrary.AttackObjects;
 using ModelLibrary.CreatureObejcts;
 using ModelLibrary.DefenceObjects;
@@ -31,7 +29,7 @@ namespace ModelLibrary.World
             CreatureBaseObjects = new List<CreatureBaseObject>
             {
                 new Phoenix { EquipedAttackBaseObject = new Sword() },
-                new Snake(),
+                new FireGolem(),
                 new Deamon {EquipedAttackBaseObject = new Bow(), DefenceBaseObjects = new List<DefenceBaseObject>{new Helm(), new Boot()}}
             };
 

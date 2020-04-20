@@ -4,16 +4,16 @@ using ModelLibrary.AttackObjects;
 
 namespace ModelLibrary.CreatureObejcts
 {
-    public class Phoenix : CreatureBaseObject
+    class FireGolem : CreatureBaseObject
     {
-        public Phoenix()
+        public FireGolem()
         {
-            BaseDamage = 3;
-            BaseSpeed = 3;
-            Size = 2;
+            BaseDamage = 5;
+            BaseSpeed = 1;
+            Size = 1;
             Difficulty1 = Difficulty.NORMAL;
-            Life = 20;
-            
+            Life = 30;
+
             CalculateDamage();
         }
 

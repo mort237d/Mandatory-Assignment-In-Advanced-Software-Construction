@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ModelLibrary.AttackObjects;
+﻿using ModelLibrary.AttackObjects;
 using ModelLibrary.DefenceObjects;
 
 namespace ModelLibrary.Objects

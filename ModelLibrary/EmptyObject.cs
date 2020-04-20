@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ModelLibrary
+﻿namespace ModelLibrary
 {
     class EmptyObject : WorldObject
     {

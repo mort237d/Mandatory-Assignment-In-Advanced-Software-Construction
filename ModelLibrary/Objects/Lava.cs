@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ModelLibrary.Objects
+﻿namespace ModelLibrary.Objects
 {
     class Lava : BaseObject
     {

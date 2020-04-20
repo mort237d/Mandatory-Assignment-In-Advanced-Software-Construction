@@ -2,7 +2,6 @@
 using ModelLibrary.Objects;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 
 namespace ModelLibrary.World

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ModelLibrary.DefenceObjects
+﻿namespace ModelLibrary.DefenceObjects
 {
     public class Helm : DefenceBaseObject
     {
