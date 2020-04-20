@@ -35,7 +35,7 @@ namespace ModelLibrary.World
 
             GiveObjectsCordinates();
             GiveCreaturesCordinates();
-            WorldInit();
+            EmptyWorld();
             PopulateWorld();
             DrawWorld();
         }

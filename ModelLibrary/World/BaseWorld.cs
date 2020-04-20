@@ -2,6 +2,7 @@
 using ModelLibrary.Objects;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace ModelLibrary.World
@@ -15,37 +16,7 @@ namespace ModelLibrary.World
         private List<BaseObject> _baseObjects;
         private List<CreatureBaseObject> _creatureBaseObjects;
 
-        protected BaseWorld()
-        {
-            
-        }
-
-        protected void GiveObjectsCordinates()
-        {
-            bool objectNotSet;
-            Random random = new Random();
-
-            foreach (var o in BaseObjects)
-            {
-                int cordX = random.Next(Size.GetLength(0));
-                int cordY = random.Next(Size.GetLength(1));
-
-                objectNotSet = true;
-
-                while (objectNotSet)
-                {
-                    if (!BaseObjects.Any(baseObject => baseObject.XCordinate == cordX && baseObject.YCordinate == cordY))
-                    {
-                        o.XCordinate = cordX;
-                        o.YCordinate = cordY;
-
-                        objectNotSet = false;
-                    }
-                }
-            }
-        }
-
-        protected void WorldInit()
+        protected void EmptyWorld()
         {
             for (int i = 0; i < Size.GetLength(0); i++)
             {
@@ -70,6 +41,31 @@ namespace ModelLibrary.World
                     if (CreatureBaseObjects.Any(creatureBaseObjects => creatureBaseObjects.XCordinate == x && creatureBaseObjects.YCordinate == y))
                     {
                         Size[x,y] = CreatureBaseObjects.Find(creatureBaseObjects => creatureBaseObjects.XCordinate == x && creatureBaseObjects.YCordinate == y);
+                    }
+                }
+            }
+        }
+
+        protected void GiveObjectsCordinates()
+        {
+            bool objectNotSet;
+            Random random = new Random();
+
+            foreach (var o in BaseObjects)
+            {
+                int cordX = random.Next(Size.GetLength(0));
+                int cordY = random.Next(Size.GetLength(1));
+
+                objectNotSet = true;
+
+                while (objectNotSet)
+                {
+                    if (!BaseObjects.Any(baseObject => baseObject.XCordinate == cordX && baseObject.YCordinate == cordY))
+                    {
+                        o.XCordinate = cordX;
+                        o.YCordinate = cordY;
+
+                        objectNotSet = false;
                     }
                 }
             }
@@ -140,96 +136,118 @@ namespace ModelLibrary.World
 
             for (int i = 0; i < CreatureBaseObjects.Count; i++)
             {
-                bool notMoved = true;
+                CheckCreatureMoevment(random, i);
 
-                while (notMoved)
-                {
-                    int moveX = random.Next(-1, 2);
-                    int moveY = random.Next(-1, 2);
-
-                    int newXCordinate = CreatureBaseObjects[i].XCordinate + moveX;
-                    int newYCordinate = CreatureBaseObjects[i].YCordinate + moveY;
-
-                    if (newXCordinate >= 0 &&
-                        newXCordinate <= Size.GetLength(0) - 1 &&
-                        newYCordinate >= 0 &&
-                        newYCordinate <= Size.GetLength(1) - 1 &&
-                        Size[newXCordinate, newYCordinate].GetType() != typeof(Rock) &&
-                        Size[newXCordinate, newYCordinate].GetType() != typeof(Tree))
-                    {
-                        if (Size[newXCordinate, newYCordinate].GetType() == typeof(Chest))
-                        {
-                            Chest chest = (Chest) Size[newXCordinate, newYCordinate];
-                            if (chest.AttackBaseObjectBonus != null)
-                            {
-                                CreatureBaseObjects[i].AttackBaseObjects = chest.AttackBaseObjectBonus;
-                            }
-
-                            if (chest.DefenceBaseObjectBonus != null)
-                            {
-                                if (!CreatureBaseObjects[i].DefenceBaseObjects.Any(d => d.Name.Contains(chest.DefenceBaseObjectBonus.Name)))
-                                {
-                                    CreatureBaseObjects[i].DefenceBaseObjects.Add(chest.DefenceBaseObjectBonus);
-                                }
-
-                                CreatureBaseObjects[i].CalculateDefence();
-                            }
-
-                            BaseObjects.Remove(BaseObjects.Find(baseObject => baseObject.XCordinate == newXCordinate && baseObject.YCordinate == newYCordinate));
-                        }
-                        CreatureBaseObjects[i].XCordinate += moveX;
-                        CreatureBaseObjects[i].YCordinate += moveY;
-                        notMoved = false;
-                    }
-
-                    if (i != CreatureBaseObjects.IndexOf(CreatureBaseObjects.Find(c => c.XCordinate == CreatureBaseObjects[i].XCordinate && c.YCordinate == CreatureBaseObjects[i].YCordinate)))
-                    {
-                        if (CreatureBaseObjects.Any(c => c.XCordinate == CreatureBaseObjects[i].XCordinate && c.YCordinate == CreatureBaseObjects[i].YCordinate))
-                        {
-                            List<CreatureBaseObject> creaturesInBattle = CreatureBaseObjects.FindAll(c => c.XCordinate == CreatureBaseObjects[i].XCordinate && c.YCordinate == CreatureBaseObjects[i].YCordinate);
-
-                            if (creaturesInBattle.Count != 0)
-                            {
-                                if (creaturesInBattle[1].TotalDamage > creaturesInBattle[0].Defence) creaturesInBattle[0].Life -= creaturesInBattle[1].TotalDamage - creaturesInBattle[0].Defence;
-                                if (creaturesInBattle[0].TotalDamage > creaturesInBattle[1].Defence) creaturesInBattle[1].Life -= creaturesInBattle[0].TotalDamage - creaturesInBattle[1].Defence;
-
-                                if (creaturesInBattle[0].Dead && creaturesInBattle[1].AttackBaseObjects != null)
-                                {
-                                    switch (creaturesInBattle[0])
-                                    {
-                                        case Snake snake:
-                                            creaturesInBattle[1].AttackBaseObjects = snake.PoisonUpgrade(creaturesInBattle[1].AttackBaseObjects);
-                                            break;
-                                        case Phoenix phoenix:
-                                            creaturesInBattle[1].AttackBaseObjects = phoenix.FireUpgrade(creaturesInBattle[1].AttackBaseObjects);
-                                            break;
-                                    }
-                                }
-
-                                if (creaturesInBattle[1].Dead && creaturesInBattle[0].AttackBaseObjects != null)
-                                {
-                                    switch (creaturesInBattle[1])
-                                    {
-                                        case Snake snake:
-                                            creaturesInBattle[0].AttackBaseObjects = snake.PoisonUpgrade(creaturesInBattle[0].AttackBaseObjects);
-                                            break;
-                                        case Phoenix phoenix:
-                                            creaturesInBattle[0].AttackBaseObjects = phoenix.FireUpgrade(creaturesInBattle[0].AttackBaseObjects);
-                                            break;
-                                    }
-                                }
-
-                                CreatureBaseObjects.RemoveAll(c => c.Dead);
-                            }
-                        }
-                    }
-                }
+                CreatureInBattle(i);
             }
 
-            WorldInit();
+            EmptyWorld();
             PopulateWorld();
             DrawWorld();
             WriteOutCreatures();
+        }
+
+        private void CreatureInBattle(int i)
+        {
+            if (i != CreatureBaseObjects.IndexOf(CreatureBaseObjects.Find(c =>
+                c.XCordinate == CreatureBaseObjects[i].XCordinate && c.YCordinate == CreatureBaseObjects[i].YCordinate)))
+            {
+                if (CreatureBaseObjects.Any(c =>
+                    c.XCordinate == CreatureBaseObjects[i].XCordinate && c.YCordinate == CreatureBaseObjects[i].YCordinate))
+                {
+                    List<CreatureBaseObject> creaturesInBattle = CreatureBaseObjects.FindAll(c =>
+                        c.XCordinate == CreatureBaseObjects[i].XCordinate && c.YCordinate == CreatureBaseObjects[i].YCordinate);
+
+                    if (creaturesInBattle.Count != 0)
+                    {
+                        if (creaturesInBattle[1].TotalDamage > creaturesInBattle[0].Defence)
+                            creaturesInBattle[0].Life -= creaturesInBattle[1].TotalDamage - creaturesInBattle[0].Defence;
+                        if (creaturesInBattle[0].TotalDamage > creaturesInBattle[1].Defence)
+                            creaturesInBattle[1].Life -= creaturesInBattle[0].TotalDamage - creaturesInBattle[1].Defence;
+
+                        if (creaturesInBattle[0].Dead && creaturesInBattle[1].AttackBaseObjects != null)
+                        {
+                            switch (creaturesInBattle[0])
+                            {
+                                case Snake snake:
+                                    creaturesInBattle[1].AttackBaseObjects =
+                                        snake.PoisonUpgrade(creaturesInBattle[1].AttackBaseObjects);
+                                    break;
+                                case Phoenix phoenix:
+                                    creaturesInBattle[1].AttackBaseObjects =
+                                        phoenix.FireUpgrade(creaturesInBattle[1].AttackBaseObjects);
+                                    break;
+                            }
+                        }
+
+                        if (creaturesInBattle[1].Dead && creaturesInBattle[0].AttackBaseObjects != null)
+                        {
+                            switch (creaturesInBattle[1])
+                            {
+                                case Snake snake:
+                                    creaturesInBattle[0].AttackBaseObjects =
+                                        snake.PoisonUpgrade(creaturesInBattle[0].AttackBaseObjects);
+                                    break;
+                                case Phoenix phoenix:
+                                    creaturesInBattle[0].AttackBaseObjects =
+                                        phoenix.FireUpgrade(creaturesInBattle[0].AttackBaseObjects);
+                                    break;
+                            }
+                        }
+
+                        CreatureBaseObjects.RemoveAll(c => c.Dead);
+                    }
+                }
+            }
+        }
+
+        private void CheckCreatureMoevment(Random random, int i)
+        {
+            bool notMoved = true;
+
+            while (notMoved)
+            {
+                int moveX = random.Next(-1, 2);
+                int moveY = random.Next(-1, 2);
+
+                int newXCordinate = CreatureBaseObjects[i].XCordinate + moveX;
+                int newYCordinate = CreatureBaseObjects[i].YCordinate + moveY;
+
+                if (newXCordinate >= 0 &&
+                    newXCordinate <= Size.GetLength(0) - 1 &&
+                    newYCordinate >= 0 &&
+                    newYCordinate <= Size.GetLength(1) - 1 &&
+                    Size[newXCordinate, newYCordinate].GetType() != typeof(Rock) &&
+                    Size[newXCordinate, newYCordinate].GetType() != typeof(Tree))
+                {
+                    if (Size[newXCordinate, newYCordinate].GetType() == typeof(Chest))
+                    {
+                        Chest chest = (Chest) Size[newXCordinate, newYCordinate];
+                        if (chest.AttackBaseObjectBonus != null)
+                        {
+                            CreatureBaseObjects[i].AttackBaseObjects = chest.AttackBaseObjectBonus;
+                        }
+
+                        if (chest.DefenceBaseObjectBonus != null)
+                        {
+                            if (!CreatureBaseObjects[i].DefenceBaseObjects
+                                .Any(d => d.Name.Contains(chest.DefenceBaseObjectBonus.Name)))
+                            {
+                                CreatureBaseObjects[i].DefenceBaseObjects.Add(chest.DefenceBaseObjectBonus);
+                            }
+
+                            CreatureBaseObjects[i].CalculateDefence();
+                        }
+
+                        BaseObjects.Remove(BaseObjects.Find(baseObject =>
+                            baseObject.XCordinate == newXCordinate && baseObject.YCordinate == newYCordinate));
+                    }
+
+                    CreatureBaseObjects[i].XCordinate += moveX;
+                    CreatureBaseObjects[i].YCordinate += moveY;
+                    notMoved = false;
+                }
+            }
         }
 
         public void WriteOutCreatures()
