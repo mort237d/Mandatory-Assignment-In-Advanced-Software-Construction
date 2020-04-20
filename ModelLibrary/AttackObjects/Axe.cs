@@ -11,15 +11,5 @@ namespace ModelLibrary.AttackObjects
             Size = 1;
             Rarity1 = Rarity.COMMON;
         }
-
-        protected override void SingleAttack()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void ComboAttack()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

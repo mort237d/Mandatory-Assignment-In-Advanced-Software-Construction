@@ -11,15 +11,5 @@ namespace ModelLibrary.AttackObjects
             Size = 1;
             Rarity1 = Rarity.COMMON;
         }
-
-        protected override void SingleAttack()
-        {
-            Console.WriteLine("SingleAttack");
-        }
-
-        protected override void ComboAttack()
-        {
-            Console.WriteLine("ComboAttack");
-        }
     }
 }

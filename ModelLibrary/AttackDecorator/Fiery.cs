@@ -19,16 +19,6 @@ namespace ModelLibrary.AttackDecorator
             Damage += FireDamage;
         }
 
-        protected override void SingleAttack()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void ComboAttack()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string ToString()
         {
             return $"{base.ToString()}, FireDamage: {FireDamage}";

@@ -9,8 +9,6 @@ namespace ModelLibrary.World
     public abstract class BaseWorld
     {
         private WorldObject[,] _size;
-        private int _height;
-        private int _width;
 
         private List<BaseObject> _baseObjects = new List<BaseObject>();
         private List<CreatureBaseObject> _creatureBaseObjects = new List<CreatureBaseObject>();
@@ -21,6 +19,7 @@ namespace ModelLibrary.World
             CreateObjects();
         }
 
+        //Factory methods
         public abstract void CreateCreatures();
         public abstract void CreateObjects();
 
@@ -42,14 +41,10 @@ namespace ModelLibrary.World
                 for (int y = 0; y < Size.GetLength(1); y++)
                 {
                     if (BaseObjects.Any(baseObjects => baseObjects.XCordinate == x && baseObjects.YCordinate == y))
-                    {
-                        Size[x,y] = BaseObjects.Find(baseObjects => baseObjects.XCordinate == x && baseObjects.YCordinate == y);
-                    }
+                        Size[x, y] = BaseObjects.Find(baseObjects => baseObjects.XCordinate == x && baseObjects.YCordinate == y);
 
                     if (CreatureBaseObjects.Any(creatureBaseObjects => creatureBaseObjects.XCordinate == x && creatureBaseObjects.YCordinate == y))
-                    {
-                        Size[x,y] = CreatureBaseObjects.Find(creatureBaseObjects => creatureBaseObjects.XCordinate == x && creatureBaseObjects.YCordinate == y);
-                    }
+                        Size[x, y] = CreatureBaseObjects.Find(creatureBaseObjects => creatureBaseObjects.XCordinate == x && creatureBaseObjects.YCordinate == y);
                 }
             }
         }
@@ -136,14 +131,11 @@ namespace ModelLibrary.World
 
         private void CreatureInBattle(int i)
         {
-            if (i != CreatureBaseObjects.IndexOf(CreatureBaseObjects.Find(c =>
-                c.XCordinate == CreatureBaseObjects[i].XCordinate && c.YCordinate == CreatureBaseObjects[i].YCordinate)))
+            if (i != CreatureBaseObjects.IndexOf(CreatureBaseObjects.Find(c => c.XCordinate == CreatureBaseObjects[i].XCordinate && c.YCordinate == CreatureBaseObjects[i].YCordinate)))
             {
-                if (CreatureBaseObjects.Any(c =>
-                    c.XCordinate == CreatureBaseObjects[i].XCordinate && c.YCordinate == CreatureBaseObjects[i].YCordinate))
+                if (CreatureBaseObjects.Any(c => c.XCordinate == CreatureBaseObjects[i].XCordinate && c.YCordinate == CreatureBaseObjects[i].YCordinate))
                 {
-                    List<CreatureBaseObject> creaturesInBattle = CreatureBaseObjects.FindAll(c =>
-                        c.XCordinate == CreatureBaseObjects[i].XCordinate && c.YCordinate == CreatureBaseObjects[i].YCordinate);
+                    List<CreatureBaseObject> creaturesInBattle = CreatureBaseObjects.FindAll(c => c.XCordinate == CreatureBaseObjects[i].XCordinate && c.YCordinate == CreatureBaseObjects[i].YCordinate);
 
                     if (creaturesInBattle.Count != 0)
                     {
@@ -184,24 +176,17 @@ namespace ModelLibrary.World
                     if (Size[newXCordinate, newYCordinate].GetType() == typeof(Chest))
                     {
                         Chest chest = (Chest) Size[newXCordinate, newYCordinate];
-                        if (chest.AttackBaseObjectBonus != null)
-                        {
-                            CreatureBaseObjects[i].EquipedAttackBaseObject = chest.AttackBaseObjectBonus;
-                        }
+
+                        if (chest.AttackBaseObjectBonus != null) CreatureBaseObjects[i].EquipedAttackBaseObject = chest.AttackBaseObjectBonus;
 
                         if (chest.DefenceBaseObjectBonus != null)
                         {
-                            if (!CreatureBaseObjects[i].DefenceBaseObjects
-                                .Any(d => d.Name.Contains(chest.DefenceBaseObjectBonus.Name)))
-                            {
-                                CreatureBaseObjects[i].DefenceBaseObjects.Add(chest.DefenceBaseObjectBonus);
-                            }
+                            if (!CreatureBaseObjects[i].DefenceBaseObjects.Any(d => d.Name.Contains(chest.DefenceBaseObjectBonus.Name))) CreatureBaseObjects[i].DefenceBaseObjects.Add(chest.DefenceBaseObjectBonus);
 
                             CreatureBaseObjects[i].CalculateDefence();
                         }
 
-                        BaseObjects.Remove(BaseObjects.Find(baseObject =>
-                            baseObject.XCordinate == newXCordinate && baseObject.YCordinate == newYCordinate));
+                        BaseObjects.Remove(BaseObjects.Find(baseObject => baseObject.XCordinate == newXCordinate && baseObject.YCordinate == newYCordinate));
                     }
                     if (Size[newXCordinate, newYCordinate].GetType() == typeof(Lava))
                     {
@@ -229,10 +214,7 @@ namespace ModelLibrary.World
 
                 int differenceOfLength = stat.Length - name.Length;
 
-                for (int i = 0; i < differenceOfLength; i++)
-                {
-                    spaces += " ";
-                }
+                for (int i = 0; i < differenceOfLength; i++) spaces += " ";
 
                 creatureNames += $"{name}{spaces} | ";
                 creatureStats += $"{stat} | ";
@@ -268,18 +250,6 @@ namespace ModelLibrary.World
         {
             get => _creatureBaseObjects;
             set => _creatureBaseObjects = value;
-        }
-
-        public int Height
-        {
-            get => _height;
-            set => _height = value;
-        }
-
-        public int Width
-        {
-            get => _width;
-            set => _width = value;
         }
     }
 }
