@@ -10,28 +10,7 @@ namespace ModelLibrary.World
     {
         public Volcano()
         {
-            Size = new WorldObject[20, 20];
-
-            BaseObjects = new List<BaseObject>
-            {
-                new Chest(null, new Boot()),
-                new Chest(new Bow(), new Helm()),
-                new Rock(),
-                new Rock(),
-                new Rock(),
-                new Lava(),
-                new Lava(),
-                new Lava(),
-                new Lava(),
-                new Lava()
-            };
-
-            CreatureBaseObjects = new List<CreatureBaseObject>
-            {
-                new Phoenix { EquipedAttackBaseObject = new Sword() },
-                new FireGolem(),
-                new Deamon {EquipedAttackBaseObject = new Bow(), DefenceBaseObjects = new List<DefenceBaseObject>{new Helm(), new Boot()}}
-            };
+            Size = new WorldObject[10, 10];
 
             List<WorldObject> wo = new List<WorldObject>();
             wo.AddRange(BaseObjects);
@@ -45,12 +24,17 @@ namespace ModelLibrary.World
 
         public override void CreateCreatures()
         {
-            throw new System.NotImplementedException();
+            CreatureBaseObjects.Add(new Phoenix { EquipedAttackBaseObject = new Sword() });
+            CreatureBaseObjects.Add(new FireGolem());
+            CreatureBaseObjects.Add(new Deamon { EquipedAttackBaseObject = new Bow(), DefenceBaseObjects = new List<DefenceBaseObject> { new Helm(), new Boot() } });
         }
 
         public override void CreateObjects()
         {
-            throw new System.NotImplementedException();
+            BaseObjects.Add(new Chest(null, new Boot()));
+            BaseObjects.Add(new Chest(new Bow(), new Helm()));
+            for (int i = 0; i < 4; i++) BaseObjects.Add(new Rock());
+            for (int i = 0; i < 8; i++) BaseObjects.Add(new Lava());
         }
     }
 }
