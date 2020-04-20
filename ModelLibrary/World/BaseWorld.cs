@@ -93,6 +93,10 @@ namespace ModelLibrary.World
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.Write($"|{Size[x, y].Name.Remove(1)}|");
                             break;
+                        case Lava lava:
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write($"|{Size[x, y].Name.Remove(1)}|");
+                            break;
                         default:
                             Console.Write($"|{Size[x, y].Name.Remove(1)}|");
                             break;
@@ -190,6 +194,11 @@ namespace ModelLibrary.World
 
                         BaseObjects.Remove(BaseObjects.Find(baseObject =>
                             baseObject.XCordinate == newXCordinate && baseObject.YCordinate == newYCordinate));
+                    }
+                    if (Size[newXCordinate, newYCordinate].GetType() == typeof(Lava))
+                    {
+                        CreatureBaseObjects[i].Life -= 1;
+                        if (CreatureBaseObjects[i].Dead) CreatureBaseObjects.RemoveAt(i);
                     }
 
                     CreatureBaseObjects[i].XCordinate += moveX;

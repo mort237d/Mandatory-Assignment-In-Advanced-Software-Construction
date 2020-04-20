@@ -8,12 +8,14 @@ namespace Game
     {
         static void Main(string[] args)
         {
-            Forest forest = new Forest();
+            //Forest forest = new Forest();
+            Volcano volcano = new Volcano();
             while (true)
             {
                 Console.Clear();
-                forest.CreaturesMoving();
-                Thread.Sleep(200);
+                //forest.CreaturesMoving();
+                volcano.CreaturesMoving();
+                Thread.Sleep(700);
             }
         }
     }
