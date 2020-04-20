@@ -22,7 +22,7 @@ namespace Game
             d.DefenceBaseObjects = new List<DefenceBaseObject>(){new Helm()};
             d.CalculateDefence();
 
-            Forest forest = new Forest(new WorldObject[4,4], new List<BaseObject>(), new List<CreatureBaseObject>{new Phoenix(){AttackBaseObjects = new Sword()}, new Snake()});
+            Forest forest = new Forest();
             while (true)
             {
                 Console.Clear();

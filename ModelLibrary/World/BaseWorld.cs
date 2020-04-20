@@ -9,24 +9,18 @@ namespace ModelLibrary.World
     public abstract class BaseWorld
     {
         private WorldObject[,] _size;
+        private int _height;
+        private int _width;
 
         private List<BaseObject> _baseObjects;
         private List<CreatureBaseObject> _creatureBaseObjects;
 
-        protected BaseWorld(WorldObject[,] size, List<BaseObject> baseObjects, List<CreatureBaseObject> creatureBaseObjects)
+        protected BaseWorld()
         {
-            Size = size;
-            BaseObjects = baseObjects;
-            CreatureBaseObjects = creatureBaseObjects;
-
-            GiveObjectsCordinates();
-            GiveCreaturesCordinates();
-            WorldInit();
-            PopulateWorld();
-            DrawWorld();
+            
         }
 
-        private void GiveObjectsCordinates()
+        protected void GiveObjectsCordinates()
         {
             bool objectNotSet;
             Random random = new Random();
@@ -51,7 +45,7 @@ namespace ModelLibrary.World
             }
         }
 
-        private void WorldInit()
+        protected void WorldInit()
         {
             for (int i = 0; i < Size.GetLength(0); i++)
             {
@@ -81,7 +75,7 @@ namespace ModelLibrary.World
             }
         }
 
-        private void GiveCreaturesCordinates()
+        protected void GiveCreaturesCordinates()
         {
             bool creatureNotSet;
             Random random = new Random();
@@ -105,7 +99,7 @@ namespace ModelLibrary.World
             }
         }
 
-        private void DrawWorld()
+        protected void DrawWorld()
         {
             for (int x = 0; x < Size.GetLength(0); x++)
             {
@@ -122,6 +116,10 @@ namespace ModelLibrary.World
                             break;
                         case Rock rock:
                             Console.ForegroundColor = ConsoleColor.Gray;
+                            Console.Write($"|{Size[x, y].Name.Remove(1)}|");
+                            break;
+                        case Tree tree:
+                            Console.ForegroundColor = ConsoleColor.Green;
                             Console.Write($"|{Size[x, y].Name.Remove(1)}|");
                             break;
                         default:
@@ -156,7 +154,8 @@ namespace ModelLibrary.World
                         newXCordinate <= Size.GetLength(0) - 1 &&
                         newYCordinate >= 0 &&
                         newYCordinate <= Size.GetLength(1) - 1 &&
-                        Size[newXCordinate, newYCordinate].GetType() != typeof(Rock))
+                        Size[newXCordinate, newYCordinate].GetType() != typeof(Rock) &&
+                        Size[newXCordinate, newYCordinate].GetType() != typeof(Tree))
                     {
                         if (Size[newXCordinate, newYCordinate].GetType() == typeof(Chest))
                         {
@@ -285,6 +284,18 @@ namespace ModelLibrary.World
         {
             get => _creatureBaseObjects;
             set => _creatureBaseObjects = value;
+        }
+
+        public int Height
+        {
+            get => _height;
+            set => _height = value;
+        }
+
+        public int Width
+        {
+            get => _width;
+            set => _width = value;
         }
     }
 }

@@ -96,7 +96,11 @@ namespace ModelLibrary.CreatureObejcts
         public List<DefenceBaseObject> DefenceBaseObjects
         {
             get => _defenceBaseObjects;
-            set => _defenceBaseObjects = value;
+            set
+            {
+                _defenceBaseObjects = value;
+                CalculateDefence();
+            }
         }
 
         public int MaxSizeOfDefenceObject
